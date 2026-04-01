@@ -27,7 +27,7 @@ jobs:
 
       - name: Run ESLint
         working-directory: ./backend
-        run: npx eslint server.js --rule '{"no-unused-vars": "warn"}'
+        run: npm run lint
 
       - name: Run tests
         working-directory: ./backend
@@ -80,12 +80,11 @@ jobs:
       - name: Start services
         run: docker-compose up -d --build
 
-      - name: Wait for backend to be ready
+      - name: Wait for backend
         run: sleep 10
 
       - name: Health check
-        run: |
-          curl --fail http://localhost:3000/health || exit 1
+        run: curl --fail http://localhost:3000/health || exit 1
 
       - name: Stop services
         run: docker-compose down
